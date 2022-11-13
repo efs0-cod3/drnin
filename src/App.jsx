@@ -43,21 +43,23 @@ export default function App() {
           </div>
           {/* svg divider */}
           <h3>Aqui encontraras</h3>
-          <Features
-            icon={<FaThumbsUp />}
-            titulo="Satifaccion Garantizada"
-            texto="Lorem ipsum dolor sit amet, consect adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua"
-          />
+          <div className="features--container">
+            <Features
+              icon={<FaUserMd />}
+              titulo="Equipo Profesional"
+              texto="Lorem ipsum dolor sit amet, consect adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua"
+            />
           <Features
             icon={<FaTooth />}
             titulo="Tecnologia de Punta"
             texto="Lorem ipsum dolor sit amet, consect adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua"
           />
           <Features
-            icon={<FaUserMd />}
-            titulo="Equipo Profesional"
+            icon={<FaThumbsUp />}
+            titulo="Satifaccion Garantizada"
             texto="Lorem ipsum dolor sit amet, consect adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua"
           />
+          </div>
           {/* svg divider */}
           <div class="custom-shape-divider-bottom-1667862623">
             <svg
@@ -74,12 +76,15 @@ export default function App() {
           </div>
           {/* svg divider */}
         </section>
-
-        <section className="form--section" id="cita">
+        <section className="form--section" id="cita" >
           <form>
             <h2 className="h-cita">Aparta tu cita</h2>
+            <section className="input--section">
+            <div>
             <Input lable="Nombre" type="text" placeholder="Juan Perez" />
             <Input lable="Email" type="email" placeholder="juanp@gmail.com" />
+            </div>
+            <div>
             <section className="select--container">
               <label className="label">Elije tu servicio</label>
               <select className="select">
@@ -91,6 +96,8 @@ export default function App() {
               </select>
             </section>
             <Input lable="Fecha" type="date" placeholde="Selecciona tu fecha" />
+            </div>
+            </section>
             <button className="boton--cita">Hacer cita</button>
           </form>
         </section>
@@ -110,6 +117,7 @@ export default function App() {
             </svg>
           </div>
           <h3>Servicios</h3>
+          <div className="services--cards">
           <Services
             className="services--img blanq"
             icono={blanqueamiento}
@@ -146,6 +154,7 @@ export default function App() {
             titulo="Carillas"
             texto="Lorem ipsum dolor sit amet, consect adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua"
           />
+          </div>
 
           {/* divider svg bottom */}
           <div class="custom-shape-divider-bottom-1668034141">

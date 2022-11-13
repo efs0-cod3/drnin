@@ -17,8 +17,9 @@ export default function Footer() {
             />
             </div>
 
-            <section>
-                <div className="address">
+            <section className="aNl">
+              <div>
+              <div className="address">
                     <FaMapMarkerAlt className="address--icon" />
                     <p>Av. Pasteur No. 55, Suite 102, Gascue, Santo Domingo.</p>
                 </div>
@@ -27,8 +28,9 @@ export default function Footer() {
                     <FaEnvelope className="address--icon"/>
                     <p>juanp@gmail.com</p>
                 </div>
-            </section>
+              </div>
             <QuickLinks/>
+            </section>
             
         </footer>
     )
