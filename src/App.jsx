@@ -10,6 +10,8 @@ import blanqueamiento from "./assets/blanqueamiento.png";
 import corona from "./assets/coronas.png";
 import implante from "./assets/implantes.png";
 import orto from "./assets/orto.png";
+import smile from "./assets/smile.png";
+import beneer from "./assets/carillas.png";
 
 export default function App() {
   return (
@@ -40,6 +42,7 @@ export default function App() {
             </svg>
           </div>
           {/* svg divider */}
+          <h3>Aqui encontraras</h3>
           <Features
             icon={<FaThumbsUp />}
             titulo="Satifaccion Garantizada"
@@ -129,6 +132,18 @@ export default function App() {
             className="services--img implante"
             icono={implante}
             titulo="Implantes"
+            texto="Lorem ipsum dolor sit amet, consect adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua"
+          />
+          <Services
+            className="services--img"
+            icono={smile}
+            titulo="Diseño de sonrisa"
+            texto="Lorem ipsum dolor sit amet, consect adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua"
+          />
+          <Services
+            className="services--img"
+            icono={beneer}
+            titulo="Carillas"
             texto="Lorem ipsum dolor sit amet, consect adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua"
           />
 

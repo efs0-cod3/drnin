@@ -1,58 +1,109 @@
 :root {
-  --cyan: #47B5FF;
+  --cyan: #47b5ff;
   --cyan-active: #60bffe;
-  --dblue: #06283D;
-  --address_color:#2a5e7f;
+  --dblue: #06283d;
+  --address_color: #2a5e7f;
 }
 
-body{
-  color: #06283D;
+html {
+  scroll-behavior: smooth;
+}
+body {
+  color: #06283d;
 }
 
-*{
+* {
   margin: 0;
   padding: 0;
 }
 
+header {
+  background: white;
+  width: 100%;
+  box-shadow: 0px 2.98256px 7.4564px rgba(0, 0, 0, 0.2);
+}
+
+.nav--scrolled {
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 1;
+  box-shadow: 0px 2.98256px 7.4564px rgba(0, 0, 0, 0.2);
+
+}
 /* nav */
 
-nav{
+nav {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  box-shadow: 0px 2.98256px 7.4564px rgba(0, 0, 0, 0.2);
-  background: white;
-  position: fixed;
-  top: 0;
-  width: 100vw;
-  z-index: 99;
- }
+  z-index: 3;
+}
 
-.nav--logo{
+.nav--logo {
   padding: 10px 20px;
   width: 150px;
 }
 
-.ham{
-  padding: 10px 20px;
+.nav_items {
+  margin: 0;
+  list-style: none;
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  justify-content: flex-start;
+  font-size: 1.4rem;
+  position: fixed;
+  top: 3.8rem;
+  transform: translateX(400px);
+  transition: all ease-in-out 0.6s 0.1s;
+  background-color: white;
+  padding: 10px;
+  opacity: 0;
+}
+
+.nav_items li a:hover{
   color: var(--cyan);
-  font-size: 24px;
+  transition: all .3s ease-in-out ;
+}
+
+.active {
+  display: none;
+}
+
+.times {
   cursor: pointer;
+}
+
+.bars {
+  cursor: pointer;
+}
+
+.show {
+  transition: all ease-in-out 0.6s 0.2s;
+  opacity: 1;
+  transform: translateX(224px);
+  z-index: 1;
+  height: fit-content;
+  border-radius: 0 0 8px 8px;
+  box-shadow: 0px 2.98256px 7.4564px rgba(0, 0, 0, 0.2);
+}
+.nav_items li {
+  padding-top: 5px;
+}
+
+.nav_items a {
+  text-decoration: none;
+  color: var(--address_color);
 }
 
 /* nosotros */
 
 .nosotros {
-  margin-top: 60px;
   padding: 20px;
   text-align: center;
   background: var(--cyan);
 }
-
-
-
-
-
 
 /* features */
 
@@ -66,8 +117,8 @@ nav{
   padding: 10px 0;
 }
 
-.features--icon{
-  font-size:30px;
+.features--icon {
+  font-size: 30px;
   padding-bottom: 5px;
 }
 
@@ -93,7 +144,7 @@ nav{
 }
 
 .custom-shape-divider-top-1667862197 .shape-fill {
-  fill: #47B5FF;
+  fill: #47b5ff;
 }
 
 /* svg bottom */
@@ -115,14 +166,10 @@ nav{
 }
 
 .custom-shape-divider-bottom-1667862623 .shape-fill {
-  fill: #47B5FF;
+  fill: #47b5ff;
 }
 
-
 /* form */
-
-
-
 
 .form--section {
   background-color: var(--cyan);
@@ -131,7 +178,7 @@ nav{
 
 form {
   position: relative;
-  margin:0 auto;
+  margin: 0 auto;
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -153,7 +200,7 @@ form {
   width: 200px;
 }
 
-.h-cita{
+.h-cita {
   text-align: center;
   color: var(--cyan);
 }
@@ -162,16 +209,16 @@ input::placeholder {
   color: var(--dblue);
 }
 
-.select{
-  padding: 10px 5px ;
+.select {
+  padding: 10px 5px;
   border-radius: 8px;
-  border: solid 1px var(--cyan) ;
+  border: solid 1px var(--cyan);
   width: 210px;
   color: var(--dblue);
   background-color: white;
 }
 
-.input--container{
+.input--container {
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -184,11 +231,10 @@ input::placeholder {
   align-items: center;
 }
 
-
 button {
   max-width: 200px;
   margin: 0 auto;
-  padding: 10px 20px ;
+  padding: 10px 20px;
   border-radius: 50px;
   border: none;
   background-color: var(--cyan);
@@ -214,7 +260,7 @@ button:active {
 /* services section */
 
 .services--section {
-  padding: 50px 20px ;
+  padding: 50px 20px;
   position: relative;
 }
 
@@ -222,19 +268,27 @@ button:active {
   display: flex;
   align-items: center;
   gap: 10px;
-  margin: 10px 0;
+  margin: 10px;
+  margin-top: 20px;
+  box-shadow: 2px 4px 5px 1px rgba(38, 139, 255, 0.6);
+  padding: 5px 10px;
+  border-radius: 8px;
 }
 
 .services--img {
   width: 50px;
 }
 
-.implante {
-  padding: 10px;
-height: 50px;
+.service--container h3 {
+  color: var(--cyan);
 }
 
-.blanq{
+.implante {
+  padding: 10px;
+  height: 50px;
+}
+
+.blanq {
   padding: 2px;
   height: 50px;
 }
@@ -284,8 +338,6 @@ height: 50px;
   fill: var(--cyan);
 }
 
-
-
 /* footer */
 
 footer {
@@ -310,18 +362,19 @@ footer {
 
 .socials-icon:hover {
   color: var(--cyan);
-  transition: all .5s ease-in-out;
+  transition: all 0.5s ease-in-out;
 }
 
-.address{
+.address {
   display: flex;
   align-items: center;
   gap: 10px;
   text-align: left;
   margin: 10px;
+  margin-left: 0;
 }
 
-.address--icon{
+.address--icon {
   font-size: 20px;
 }
 
@@ -342,4 +395,8 @@ footer {
 .quickLinks a {
   text-decoration: none;
   color: var(--address_color);
+}
+
+@media all and (min-width: 800px) {
+  
 }
