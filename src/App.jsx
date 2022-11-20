@@ -4,6 +4,7 @@ import Navbar from "./components/Navbar";
 import Features from "./components/Features";
 import Input from "./components/Input";
 import Services from "./components/Services";
+import Equipo from "./components/Equipo";
 import Footer from "./components/Footer";
 import { FaTooth, FaThumbsUp, FaUserMd } from "react-icons/fa";
 import blanqueamiento from "./assets/blanqueamiento.png";
@@ -12,6 +13,10 @@ import implante from "./assets/implantes.png";
 import orto from "./assets/orto.png";
 import smile from "./assets/smile.png";
 import beneer from "./assets/carillas.png";
+import drR from "./assets/equipo/drricardo.png"
+import drN from "./assets/equipo/drnin.png"
+import nBg from "./assets/equipo/dnt.png"
+import clinicLogo from "./assets/nin_logo.png"
 
 export default function App() {
   return (
@@ -19,9 +24,10 @@ export default function App() {
       <Navbar />
       <main>
         <section className="nosotros" id="nosotros">
-          <h2 lang="esp">
-            Aquí en Clínica dental Dr. Francisco Nin contamos un equipo de
-            profesionales que con entrega y pasión brindamos el mejor servicio a
+          <img src={clinicLogo} className="flogo"/>
+          <h2 className="nosotros-h2" lang="esp">
+            Contamos un equipo de
+            profesionales que con <span className="hl">pasión</span> y <span className="hl">entrega</span> brindamos el mejor servicio a
             nuestros pacientes.
           </h2>
         </section>
@@ -78,11 +84,11 @@ export default function App() {
         </section>
         <section className="form--section" id="cita" >
           <form>
-            <h2 className="h-cita">Aparta tu cita</h2>
+            <h2 className="h-cita">Agenda tu cita</h2>
             <section className="input--section">
             <div>
             <Input lable="Nombre" type="text" placeholder="Juan Perez" />
-            <Input lable="Email" type="email" placeholder="juanp@gmail.com" />
+            <Input lable="Correo" type="email" placeholder="juanp@gmail.com" />
             </div>
             <div>
             <section className="select--container">
@@ -101,9 +107,9 @@ export default function App() {
             <button className="boton--cita">Hacer cita</button>
           </form>
         </section>
-        {/* services */}
-        <section className="services--section" id="servicios">
-          <div class="custom-shape-divider-top-1667952866">
+        {/* equipo */}
+        <section className="team--section">
+        <div class="custom-shape-divider-top-1667952866">
             <svg
               data-name="Layer 1"
               xmlns="http://www.w3.org/2000/svg"
@@ -116,7 +122,20 @@ export default function App() {
               ></path>
             </svg>
           </div>
+        <h3>Equipo</h3>
+
+       <div className="team">
+       <Equipo img={drN} name='Dr. Francisco Nin' />
+        <Equipo img={drR} name='Dr. Ricardo Brea' />
+       </div>
+        </section>
+        {/* equipo */}
+
+        {/* services */}
+        <section className="services--section" id="servicios">
+          <div>
           <h3>Servicios</h3>
+          </div>
           <div className="services--cards">
           <Services
             className="services--img blanq"
@@ -136,6 +155,8 @@ export default function App() {
             titulo="Coronas"
             texto="Lorem ipsum dolor sit amet, consect adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua"
           />
+          </div>
+          <div className="services--cards">
           <Services
             className="services--img implante"
             icono={implante}

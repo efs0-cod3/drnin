@@ -29,7 +29,6 @@ header {
   left: 0;
   z-index: 1;
   box-shadow: 0px 2.98256px 7.4564px rgba(0, 0, 0, 0.2);
-
 }
 /* nav */
 
@@ -37,7 +36,6 @@ nav {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  z-index: 3;
 }
 
 .nav--logo {
@@ -61,15 +59,15 @@ nav {
   position: fixed;
   top: -20rem;
   right: 0px;
-  transition: all ease-in-out 0.6s 0.2s;
+  transition: all ease-in-out 0.4s 0.1s;
   background-color: white;
   padding: 10px;
   opacity: 0;
 }
 
-.nav_items li a:hover{
+.nav_items li a:hover {
   color: var(--cyan);
-  transition: all .3s ease-in-out ;
+  transition: all 0.3s ease-in-out;
 }
 
 .active {
@@ -85,14 +83,12 @@ nav {
 }
 
 .show {
-  top: 3.8rem;
-
-  transition: all ease-in-out 0.6s 0.2s;
+  top: 3.6rem;
+  transition: all ease-in-out 0.4s 0.1s;
   opacity: 1;
-  z-index: 1;
+  z-index: 0;
   height: fit-content;
   border-radius: 0 0 8px 8px;
-  box-shadow: 0px 2.98256px 7.4564px rgba(0, 0, 0, 0.2);
 }
 .nav_items li {
   padding-top: 5px;
@@ -104,11 +100,35 @@ nav {
 }
 
 /* nosotros */
+.flogo {
+  height: 100px;
+
+  /* position: absolute;
+  top: 200px;
+  left: 200px; */
+}
+
+.hl {
+  color: var(--cyan);
+}
 
 .nosotros {
   padding: 20px;
   text-align: center;
   background: var(--cyan);
+}
+.nosotros {
+  position: relative;
+  background-repeat: no-repeat;
+  background-image: url(./assets/equipo/px.jpg);
+  background-size: cover;
+  background-position: 0, 100px;
+  background-repeat: no-repeat;
+}
+
+.nosotros-h2 {
+  font-size: 1.8rem;
+  line-height: 1;
 }
 
 /* features */
@@ -154,7 +174,7 @@ nav {
   position: relative;
   display: block;
   width: calc(100% + 1.3px);
-  height: 30px;
+  height: 50px;
 }
 
 .custom-shape-divider-top-1667862197 .shape-fill {
@@ -164,7 +184,7 @@ nav {
 /* svg bottom */
 .custom-shape-divider-bottom-1667862623 {
   position: absolute;
-  bottom: 0;
+  bottom: -1px;
   left: 0;
   width: 100%;
   overflow: hidden;
@@ -202,7 +222,6 @@ form {
   max-width: 80%;
   box-shadow: 0px 2.98256px 7.4564px rgba(0, 0, 0, 0.3);
 }
-
 
 .label {
   font-weight: bold;
@@ -245,7 +264,6 @@ input::placeholder {
   flex-direction: column;
   align-items: center;
   padding: 10px 0;
-
 }
 
 button {
@@ -274,10 +292,38 @@ button:active {
   font-size: 12px;
 }
 
+/* team */
+.team--section {
+  position: relative;
+  padding: 50px 20px;
+}
+
+.team {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 20px;
+  padding: 40px 20px;
+}
+
+.team_card {
+  text-align: center;
+  padding: 20px 15px;
+  border-radius: 12px;
+  box-shadow: 2px 4px 5px 1px rgba(38, 139, 255, 0.6);
+}
+
+.team_card--img {
+  width: 250px;
+  height: 260px;
+  border-radius: 8px;
+}
+/* team */
+
 /* services section */
 
 .services--section {
-  padding: 50px 20px;
+  padding: 30px 20px 50px;
   position: relative;
 }
 
@@ -293,12 +339,11 @@ button:active {
   border-radius: 8px;
 }
 
-.services--cards{
+.services--cards {
   display: flex;
   flex-wrap: wrap;
+  flex: 1;
   justify-content: center;
-
-  
 }
 
 .services--img {
@@ -449,7 +494,7 @@ footer {
   }
 }
 
-@media all and (min-width: 715px){
+@media all and (min-width: 715px) {
   .mobile--menu {
     display: none;
   }
@@ -467,11 +512,54 @@ footer {
 }
 
 @media all and (min-width: 830px) {
+  nav {
+    padding: 10px 20px;
+  }
+
+  .nosotros {
+    position: relative;
+    display: flex;
+    padding: 0;
+    background-repeat: no-repeat;
+    background-image: url(./assets/equipo/px.jpg);
+    background-size: cover;
+    background-position: 0, 100px;
+    height: 800px;
+    background-repeat: no-repeat;
+    padding: 20px;
+    justify-content: center;
+    flex-direction: column;
+  }
+
+  .nav--logo {
+    width: 200px;
+  }
+
+  .flogo {
+    height: 159px;
+    width: 600px;
+    padding-left: 20%;
+    /* position: absolute;
+    top: 200px;
+    left: 200px; */
+  }
+
+  
+
+  .nosotros-h2 {
+    width: 600px;
+    text-align: left;
+    font-size: 3rem;
+    line-height: 1;
+    padding-left: 35%;
+    color: var(--dblue);
+  }
+
   .input {
     width: 300px;
   }
 
-  .select{
+  .select {
     width: 310px;
   }
 
@@ -481,5 +569,4 @@ footer {
   button:hover {
     font-size: 18px;
   }
-  
 }
