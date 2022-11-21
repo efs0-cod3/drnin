@@ -53,17 +53,17 @@ export default function App() {
             <Features
               icon={<FaUserMd />}
               titulo="Equipo Profesional"
-              texto="Lorem ipsum dolor sit amet, consect adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua"
+              texto="Somos un equipo de profesionales altamente capasitados para resolver cualquier tipo de asistencia que necesites"
             />
           <Features
             icon={<FaTooth />}
             titulo="Tecnologia de Punta"
-            texto="Lorem ipsum dolor sit amet, consect adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua"
+            texto="Contamos con instrumentos y equipos con tecnologia de punta que nos ayudan a brindar ese servicio que nos caracteriza."
           />
           <Features
             icon={<FaThumbsUp />}
             titulo="Satifaccion Garantizada"
-            texto="Lorem ipsum dolor sit amet, consect adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua"
+            texto="Te aseguramos un puesto en nuestra agenda porque seguro que volveras y estaremos para ti en cualquier momento."
           />
           </div>
           {/* svg divider */}
@@ -82,6 +82,7 @@ export default function App() {
           </div>
           {/* svg divider */}
         </section>
+        {/* form */}
         <section className="form--section" id="cita" >
           <form>
             <h2 className="h-cita">Agenda tu cita</h2>
@@ -108,7 +109,7 @@ export default function App() {
           </form>
         </section>
         {/* equipo */}
-        <section className="team--section">
+        <section className="team--section" id="equipo"> 
         <div class="custom-shape-divider-top-1667952866">
             <svg
               data-name="Layer 1"
@@ -141,19 +142,19 @@ export default function App() {
             className="services--img blanq"
             icono={blanqueamiento}
             titulo="Blanqueamiento"
-            texto="Lorem ipsum dolor sit amet, consect adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua"
+            texto="Aplicamos la odontología estética para eliminar las manchas dentales y hacer que tus dientes adquieran una tono más blanco y brillante."
           />
           <Services
             className="services--img"
             icono={orto}
             titulo="Ortodoncia"
-            texto="Lorem ipsum dolor sit amet, consect adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua"
+            texto="Especialidad de la odontología que se encarga de la corrección de los dientes y huesos posicionados de manera incorrecta."
           />
           <Services
             className="services--img"
             icono={corona}
             titulo="Coronas"
-            texto="Lorem ipsum dolor sit amet, consect adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua"
+            texto="Es una prótesis dentaria hecha a medida para cada paciente en concreto. Son como pequeñas fundas que nos permiten recubrir completamente un diente que haya sufrido daños."
           />
           </div>
           <div className="services--cards">
@@ -161,19 +162,19 @@ export default function App() {
             className="services--img implante"
             icono={implante}
             titulo="Implantes"
-            texto="Lorem ipsum dolor sit amet, consect adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua"
+            texto="Raíz dental artificial que se inserta en el hueso de la mandíbula o del maxilar para sustituir el diente que falta como si fuera un diente natural."
           />
           <Services
             className="services--img"
             icono={smile}
             titulo="Diseño de sonrisa"
-            texto="Lorem ipsum dolor sit amet, consect adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua"
+            texto="Procedimiento dental que crea artísticamente sonrisas con armonía, estética y función."
           />
           <Services
             className="services--img"
             icono={beneer}
             titulo="Carillas"
-            texto="Lorem ipsum dolor sit amet, consect adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua"
+            texto="Las carillas dentales son unas finas láminas de porcelana o composite que se adhieren a la cara visible del diente para mejorar su aspecto."
           />
           </div>
 

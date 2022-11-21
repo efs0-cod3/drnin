@@ -57,6 +57,9 @@ export default function Navbar() {
           <a href="#cita">Haz tu cita</a>
         </li>
         <li onClick={toggleShow}>
+          <a href="#Equipo">Equipo</a>
+        </li>
+        <li onClick={toggleShow}>
           <a href="#servicios">Servicios</a>
         </li>
       </ul>
