@@ -337,7 +337,7 @@ button:active {
   margin: 10px;
   margin-top: 20px;
   box-shadow: 2px 4px 5px 1px rgba(38, 139, 255, 0.6);
-  padding: 5px 10px;
+  padding: 20px;
   border-radius: 8px;
   transition: transform .5s ease-out;
   
@@ -349,9 +349,9 @@ button:active {
 }
 
 .services--cards {
-  display: flex;
-  flex-wrap: wrap;
-  flex: 1;
+  display: grid;
+  grid-template-columns: 1fr;
+  justify-items: center;
   justify-content: center;
 }
 
@@ -518,6 +518,13 @@ footer {
     background: none;
     box-shadow: none;
   }
+  .services--cards {
+    display: grid;
+    grid-template-columns: .3fr .3fr;
+    grid-template-rows: 1fr 1fr 1fr;
+    justify-items: center;
+    justify-content: center;
+  }
 }
 
 @media all and (min-width: 830px) {
@@ -577,5 +584,16 @@ footer {
   }
   button:hover {
     font-size: 18px;
+  }
+
+  
+}
+@media all and (min-width: 1120px) {
+  .services--cards {
+    display: grid;
+    grid-template-columns: .2fr .22fr .2fr;
+    grid-template-rows: 1fr 1fr;
+    justify-items: center;
+    justify-content: center;
   }
 }
