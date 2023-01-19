@@ -59,7 +59,7 @@ nav {
   position: fixed;
   top: 3.6rem;
 
-  right: 0px;
+  right: -999px;
   transition: all ease-in-out 0.4s 0.1s;
   background-color: white;
   padding: 10px;
@@ -89,6 +89,7 @@ nav {
   height: fit-content;
   border-radius: 0 0 8px 8px;
   transition: all ease-in-out 0.6s 0.2s;
+  right: 0px;
   transition: opacity ease-in .6s;
 }
 .nav_items li {
@@ -102,11 +103,7 @@ nav {
 
 /* nosotros */
 .flogo {
-  height: 100px;
-
-  /* position: absolute;
-  top: 200px;
-  left: 200px; */
+  height: 90px;
 }
 
 .hl {
@@ -131,6 +128,8 @@ nav {
 .nosotros-h2 {
   font-size: 1.8rem;
   line-height: 1;
+  color: var(--address_color);
+  text-shadow: #ffffff95 2px 2px 3px;
 }
 
 /* features */
@@ -568,7 +567,8 @@ footer {
     font-size: 3rem;
     line-height: 1;
     padding-left: 35%;
-    color: var(--dblue);
+    color: var(--address_color);
+    text-shadow: #ffffff95 3px 3px 5px;
   }
 
   .input {
@@ -589,6 +589,23 @@ footer {
   
 }
 @media all and (min-width: 1120px) {
+  .nosotros {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 70vh;
+  }
+
+  .flogo {
+    padding-left: 0;
+  }
+
+  .nosotros-h2 {
+    padding: 0;
+    width: 70%;
+  }
+
   .services--cards {
     display: grid;
     grid-template-columns: .2fr .22fr .2fr;
