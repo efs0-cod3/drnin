@@ -1,6 +1,7 @@
 :root {
-  --cyan: #47b5ff;
-  --cyan-active: #60bffe;
+  --greennin: #008497;
+
+  --greennin-active: #60bffe;
   --dblue: #06283d;
   --address_color: #2a5e7f;
 }
@@ -40,7 +41,8 @@ nav {
 
 .nav--logo {
   padding: 10px 20px;
-  width: 150px;
+  width: 80px;
+
 }
 
 .mobile--menu {
@@ -67,7 +69,7 @@ nav {
 }
 
 .nav_items li a:hover {
-  color: var(--cyan);
+  color: var(--greennin);
   transition: all 0.3s ease-in-out;
 }
 
@@ -103,17 +105,17 @@ nav {
 
 /* nosotros */
 .flogo {
-  height: 90px;
+  width: 90px;
 }
 
 .hl {
-  color: var(--cyan);
+  color: var(--greennin);
 }
 
 .nosotros {
   padding: 20px;
   text-align: center;
-  background: var(--cyan);
+  background: var(--greennin);
   z-index: -1;
 }
 .nosotros {
@@ -158,7 +160,7 @@ nav {
 }
 
 .features--titulo {
-  color: var(--cyan);
+  color: var(--greennin);
 }
 
 /* svg top */
@@ -179,7 +181,7 @@ nav {
 }
 
 .custom-shape-divider-top-1667862197 .shape-fill {
-  fill: #47b5ff;
+  fill: var(--greennin);
 }
 
 /* svg bottom */
@@ -201,13 +203,13 @@ nav {
 }
 
 .custom-shape-divider-bottom-1667862623 .shape-fill {
-  fill: #47b5ff;
+  fill: var(--greennin);
 }
 
 /* form */
 
 .form--section {
-  background-color: var(--cyan);
+  background-color: var(--greennin);
   padding: 20px;
 }
 
@@ -231,13 +233,13 @@ form {
 .input {
   padding: 10px 5px;
   border-radius: 8px;
-  border: solid 1px var(--cyan);
+  border: solid 1px var(--greennin);
   width: 200px;
 }
 
 .h-cita {
   text-align: center;
-  color: var(--cyan);
+  color: var(--greennin);
 }
 
 input::placeholder {
@@ -247,7 +249,7 @@ input::placeholder {
 .select {
   padding: 10px 5px;
   border-radius: 8px;
-  border: solid 1px var(--cyan);
+  border: solid 1px var(--greennin);
   width: 210px;
   color: var(--dblue);
   background-color: white;
@@ -273,21 +275,21 @@ button {
   padding: 10px 20px;
   border-radius: 50px;
   border: none;
-  background-color: var(--cyan);
+  background-color: var(--greennin);
   cursor: pointer;
   box-shadow: 0px 2.98256px 7.4564px rgba(0, 0, 0, 0.3);
   font-weight: bold;
 }
 
 button:hover {
-  background-color: var(--cyan-active);
+  background-color: var(--greennin-active);
   box-shadow: 0px 1px 4px rgba(0, 0, 0, 0.413);
   font-weight: bold;
   font-size: 13px;
 }
 
 button:active {
-  background-color: var(--cyan-active);
+  background-color: var(--greennin-active);
   box-shadow: 0px 0px 0px rgba(0, 0, 0, 0.413);
   font-weight: bold;
   font-size: 12px;
@@ -359,7 +361,7 @@ button:active {
 }
 
 .service--container h3 {
-  color: var(--cyan);
+  color: var(--greennin);
 }
 
 .implante {
@@ -391,7 +393,7 @@ button:active {
 }
 
 .custom-shape-divider-top-1667952866 .shape-fill {
-  fill: var(--cyan);
+  fill: var(--greennin);
 }
 
 /* services svg div bottom */
@@ -414,7 +416,7 @@ button:active {
 }
 
 .custom-shape-divider-bottom-1668034141 .shape-fill {
-  fill: var(--cyan);
+  fill: var(--greennin);
 }
 
 /* footer */
@@ -422,7 +424,7 @@ button:active {
 footer {
   padding: 20px;
   text-align: center;
-  background-color: var(--cyan);
+  background-color: var(--greennin);
 }
 .socials--container {
   padding-top: 30px;
@@ -440,7 +442,7 @@ footer {
 }
 
 .socials-icon:hover {
-  color: var(--cyan);
+  color: var(--greennin);
   transition: all 0.5s ease-in-out;
 }
 
@@ -547,13 +549,12 @@ footer {
   }
 
   .nav--logo {
-    width: 200px;
+    width: 80px;
   }
 
   .flogo {
-    height: 159px;
-    width: 600px;
-    padding-left: 20%;
+    width: 300px;
+    padding: 20px;
     /* position: absolute;
     top: 200px;
     left: 200px; */

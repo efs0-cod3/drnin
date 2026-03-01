@@ -15,7 +15,7 @@ import beneer from "./assets/carillas.png";
 import drR from "./assets/equipo/drricardo.png";
 import drN from "./assets/equipo/drnin.png";
 import nBg from "./assets/equipo/dnt.png";
-import clinicLogo from "./assets/nin_logo.png";
+import clinicLogo from "./assets/ninlogo.png";
 import featuresData from "./featuresData";
 import servicesData from "./servicesData";
 

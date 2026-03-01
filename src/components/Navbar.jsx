@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { FaBars, FaTimes } from "react-icons/fa";
-import logo from "../assets/lm-logo.png";
+import logo from "../assets/ninlogo.png";
 
 export default function Navbar() {
   const [active, setActive] = useState("bars");
