@@ -48,19 +48,19 @@ export default function Navbar() {
       </div>
       <ul className={navItems}>
         <li  onClick={toggleShow}>
-          <a href="#nosotros">Nosotros</a>
+          <a href="#Nosotros">Nosotros</a>
         </li>
         <li onClick={toggleShow}>
-          <a href="#features">Caracteristicas</a>
+          <a href="#Features">Caracteristicas</a>
         </li>
         <li onClick={toggleShow}>
-          <a href="#cita">Haz tu cita</a>
+          <a href="#Cita">Agenda tu cita</a>
         </li>
         <li onClick={toggleShow}>
           <a href="#Equipo">Equipo</a>
         </li>
         <li onClick={toggleShow}>
-          <a href="#servicios">Servicios</a>
+          <a href="#Servicios">Servicios</a>
         </li>
       </ul>
     </nav>

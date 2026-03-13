@@ -276,7 +276,7 @@ input::placeholder {
   display: flex;
   flex-direction: column;
 
-align-items: center;
+  align-items: center;
   padding: 10px 0;
 }
 
@@ -357,8 +357,7 @@ button:active {
 }
 
 .team_card--img {
-  width: 250px;
-  height: 260px;
+  width: 220px;
   border-radius: 8px;
 }
 /* team */
@@ -572,11 +571,11 @@ footer {
   }
 
   .input--container {
-align-items: baseline;
-}
-.form_div {
-  height: 250px;
-}
+    align-items: baseline;
+  }
+  .form_div {
+    height: 250px;
+  }
 }
 
 @media all and (min-width: 715px) {
@@ -602,9 +601,9 @@ align-items: baseline;
     justify-content: center;
   }
 
-   .input--container {
-align-items: baseline;
-}
+  .input--container {
+    align-items: baseline;
+  }
 }
 
 @media all and (min-width: 830px) {
@@ -656,9 +655,9 @@ align-items: baseline;
   button:hover {
     font-size: 16px;
   }
-     .input--container {
-align-items: baseline;
-}
+  .input--container {
+    align-items: baseline;
+  }
 }
 @media all and (min-width: 1170px) {
   .nosotros {

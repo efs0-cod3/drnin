@@ -6,20 +6,19 @@ export default [
     icon: <FaUserMd />,
     titulo: "Equipo Profesional",
     texto:
-      "Somos un equipo de profesionales altamente capasitados para resolver cualquier tipo de asistencia que necesites",
+      "Contamos con un equipo de profesionales altamente capacitados y comprometidos con tu bienestar, preparados para brindarte la mejor atención y resolver cualquier necesidad odontológica con calidad y dedicación."
   },
   {
     id: 2,
     icon: <FaTooth />,
     titulo: "Tecnologia de Punta",
     texto:
-      "Contamos con instrumentos y equipos con tecnologia de punta que nos ayudan a brindar ese servicio que nos caracteriza.",
-  },
+      "Disponemos de equipos modernos y tecnología de última generación que nos permiten ofrecer tratamientos más precisos, seguros y cómodos para nuestros pacientes."},
   {
     id: 3,
     icon: <FaThumbsUp />,
     titulo: "Satifaccion Garantizada",
     texto:
-      "Te aseguramos un puesto en nuestra agenda porque seguro que volveras y estaremos para ti en cualquier momento.",
+      "Nuestro compromiso es tu satisfacción. Trabajamos cada día para que te sientas seguro y confiado con nuestros servicios, brindándote una atención cercana y resultados que te harán volver."
   },
 ];

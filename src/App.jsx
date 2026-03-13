@@ -6,11 +6,10 @@ import Input from "./components/Input";
 import Services from "./components/Services";
 import Equipo from "./components/Equipo";
 import Footer from "./components/Footer";
-import drR from "./assets/equipo/drricardo.png";
-import drN from "./assets/equipo/drnin.png";
 import clinicLogo from "./assets/ninlogo.png";
 import featuresData from "./featuresData";
 import servicesData from "./servicesData";
+import doctorsData from "./doctorsData";
 import Socials from "./components/Socials";
 import emailjs from "@emailjs/browser";
 import {
@@ -20,6 +19,7 @@ import {
   FaEnvelope,
 } from "react-icons/fa";
 import WhatsAppButton from "./components/Whatsapp";
+
 const VITE_EMAIL_SERVICE_ID = import.meta.env.VITE_EMAIL_SERVICE_ID;
 const VITE_EMAIL_TEMPLATE_ID = import.meta.env.VITE_EMAIL_TEMPLATE_ID;
 const VITE_EMAIL_PUBLIC_KEY = import.meta.env.VITE_EMAIL_PUBLIC_KEY;
@@ -33,9 +33,7 @@ export default function App() {
   const [phone, setPhone] = useState("");
   const [error, setError] = useState(null);
   const [consentimientoWhatsapp, setConsentimientoWhatsapp] = useState(false);
-  const serviceID = "service_u9cfz5q";
-  const templateID = "template_12zth9c";
-  const publicID = "Sbc5UpLfa7BKk2r2R";
+ 
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -101,19 +99,49 @@ export default function App() {
         : "No autorizó contacto",
     };
 
-    emailjs.send(
-      VITE_EMAIL_SERVICE_ID,
-      VITE_EMAIL_TEMPLATE_ID,
-      {
-        ...data,
-      },
-      VITE_EMAIL_PUBLIC_KEY,
-    ).then(()=>{
-      setModal(true);
-    }).catch(()=>{
-      setError("Error al enviar msj")
-    });
+    const handleSendToSheet = () => {
+      fetch("https://sheetdb.io/api/v1/tlwc1lp5do13o", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          data: [
+            {
+              fecha: new Date().toLocaleDateString("es-DO"),
+              nombre: name,
+              email: email,
+              telefono: phone,
+              tratamiento: tratamiento,
+              fecha_cita_solicitada: fecha,
+              consentimiento: consentimientoWhatsapp
+                ? "Autorizado"
+                : "No autorizado",
+            },
+          ],
+        }),
+      });
+    };
 
+    emailjs
+      .send(
+        VITE_EMAIL_SERVICE_ID,
+        VITE_EMAIL_TEMPLATE_ID,
+        {
+          ...data,
+        },
+        VITE_EMAIL_PUBLIC_KEY,
+      )
+      .then(() => {
+        handleSendToSheet();
+        setModal(true);
+      })
+      .catch(() => {
+        setError("Error al enviar msj");
+        setTimeout(() => {
+          setError("");
+        }, 3000);
+      });
   };
 
   const handleConsentimientoWhatsapp = (e) => {
@@ -138,6 +166,10 @@ export default function App() {
     );
   });
 
+  const doctores = doctorsData.map((doctor) => {
+    return <Equipo key={doctor.id} img={doctor.img} name={doctor.name} />;
+  });
+
   const Service = servicesData.map((item) => {
     return (
       <Services
@@ -155,7 +187,7 @@ export default function App() {
       <Navbar />
       <main>
         <WhatsAppButton />
-        <section className="nosotros" id="nosotros">
+        <section className="nosotros" id="Nosotros">
           <img src={clinicLogo} className="flogo" />
           <h2 className="nosotros-h2" lang="esp">
             Contamos un equipo de profesionales que con{" "}
@@ -165,7 +197,7 @@ export default function App() {
           </h2>
         </section>
 
-        <section className="features--section" id="features">
+        <section className="features--section" id="Features">
           {/* svg divider */}
           {/* <div className="custom-shape-divider-top-1667862197">
             <svg
@@ -200,7 +232,7 @@ export default function App() {
           {/* svg divider */}
         </section>
         {/* equipo */}
-        <section className="team--section" id="equipo">
+        <section className="team--section" id="Equipo">
           <div className="custom-shape-divider-top-1667952866">
             <svg
               data-name="Layer 1"
@@ -216,10 +248,7 @@ export default function App() {
           </div>
           <h3>Equipo</h3>
 
-          <div className="team">
-            <Equipo img={drN} name="Dr. Francisco Nin" />
-            <Equipo img={drR} name="Dr. Ricardo Brea" />
-          </div>
+          <div className="team">{doctores}</div>
           {/* divider svg bottom */}
           <div className="custom-shape-divider-bottom-1668034141">
             <svg
@@ -238,14 +267,14 @@ export default function App() {
         {/* equipo */}
 
         {/* services */}
-        <section className="services--section" id="servicios">
+        <section className="services--section" id="Servicios">
           <div>
             <h3 className="h3">Servicios</h3>
           </div>
           <div className="services--cards">{Service}</div>
         </section>
         {/* form */}
-        <section className="form--section" id="cita">
+        <section className="form--section" id="Cita">
           <div className="encuentranos">
             <div className="contacto_title">
               <h2>Mantente conectado con nosotros</h2>
