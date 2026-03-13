@@ -6,27 +6,126 @@ import Input from "./components/Input";
 import Services from "./components/Services";
 import Equipo from "./components/Equipo";
 import Footer from "./components/Footer";
-import blanqueamiento from "./assets/blanqueamiento.png";
-import corona from "./assets/coronas.png";
-import implante from "./assets/implantes.png";
-import orto from "./assets/orto.png";
-import smile from "./assets/smile.png";
-import beneer from "./assets/carillas.png";
 import drR from "./assets/equipo/drricardo.png";
 import drN from "./assets/equipo/drnin.png";
-import nBg from "./assets/equipo/dnt.png";
 import clinicLogo from "./assets/ninlogo.png";
 import featuresData from "./featuresData";
 import servicesData from "./servicesData";
+import Socials from "./components/Socials";
+import emailjs from "@emailjs/browser";
+import {
+  FaInstagram,
+  FaWhatsapp,
+  FaMapMarkerAlt,
+  FaEnvelope,
+} from "react-icons/fa";
+import WhatsAppButton from "./components/Whatsapp";
+const VITE_EMAIL_SERVICE_ID = import.meta.env.VITE_EMAIL_SERVICE_ID;
+const VITE_EMAIL_TEMPLATE_ID = import.meta.env.VITE_EMAIL_TEMPLATE_ID;
+const VITE_EMAIL_PUBLIC_KEY = import.meta.env.VITE_EMAIL_PUBLIC_KEY;
 
 export default function App() {
+  const [name, changeName] = useState("");
+  const [email, changeEmail] = useState("");
+  const [tratamiento, setTratamiento] = useState("Carillas");
+  const [fecha, setFecha] = useState("");
+  const [modal, setModal] = useState(false);
+  const [phone, setPhone] = useState("");
+  const [error, setError] = useState(null);
+  const [consentimientoWhatsapp, setConsentimientoWhatsapp] = useState(false);
+  const serviceID = "service_u9cfz5q";
+  const templateID = "template_12zth9c";
+  const publicID = "Sbc5UpLfa7BKk2r2R";
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+
+    if (!name || !email || !fecha) {
+      setError("Por favor completa todos los campos");
+
+      setTimeout(() => {
+        setError("");
+      }, 3000);
+
+      return;
+    }
+
+    if (!name) {
+      setError("Por favor completa casilla nombre");
+
+      setTimeout(() => {
+        setError("");
+      }, 3000);
+
+      return;
+    }
+
+    if (!phone || !expresions.phone.test(phone)) {
+      setError("Por favor completa casilla telefono");
+
+      setTimeout(() => {
+        setError("");
+      }, 3000);
+
+      return;
+    }
+
+    if (!email) {
+      setError("Por favor completa casilla email");
+
+      setTimeout(() => {
+        setError("");
+      }, 3000);
+
+      return;
+    }
+
+    if (!consentimientoWhatsapp) {
+      setError("Por favor autoriza contacto via whatsapp o telefono.");
+
+      setTimeout(() => {
+        setError("");
+      }, 3000);
+
+      return;
+    }
+
+    const data = {
+      nombre: name,
+      email: email,
+      tratamiento,
+      phone,
+      fecha,
+      consentimientoWhatsapp: consentimientoWhatsapp
+        ? "Sí autorizó contacto por WhatsApp"
+        : "No autorizó contacto",
+    };
+
+    emailjs.send(
+      VITE_EMAIL_SERVICE_ID,
+      VITE_EMAIL_TEMPLATE_ID,
+      {
+        ...data,
+      },
+      VITE_EMAIL_PUBLIC_KEY,
+    ).then(()=>{
+      setModal(true);
+    }).catch(()=>{
+      setError("Error al enviar msj")
+    });
+
+  };
+
+  const handleConsentimientoWhatsapp = (e) => {
+    // Access the boolean checked state using event.target.checked
+    setConsentimientoWhatsapp(e.target.checked);
+  };
+
   const expresions = {
     name: /[^a-zA-ZÀ-ÿ\s]{1,40}$/g, // Letras y espacios, pueden llevar acentos.
     mail: /^[a-zA-Z0-9_.+-]+@^[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$/g,
+    phone: /^\d{3}-?\d{3}-?\d{4}$/,
   };
-
-  const [name, changeName] = useState('');
-  const [email, changeEmail] = useState('')
 
   const features = featuresData.map((item) => {
     return (
@@ -39,7 +138,7 @@ export default function App() {
     );
   });
 
-  const services = servicesData.map((item) => {
+  const Service = servicesData.map((item) => {
     return (
       <Services
         key={item.id}
@@ -55,6 +154,7 @@ export default function App() {
     <div className="App">
       <Navbar />
       <main>
+        <WhatsAppButton />
         <section className="nosotros" id="nosotros">
           <img src={clinicLogo} className="flogo" />
           <h2 className="nosotros-h2" lang="esp">
@@ -67,7 +167,7 @@ export default function App() {
 
         <section className="features--section" id="features">
           {/* svg divider */}
-          <div className="custom-shape-divider-top-1667862197">
+          {/* <div className="custom-shape-divider-top-1667862197">
             <svg
               data-name="Layer 1"
               xmlns="http://www.w3.org/2000/svg"
@@ -80,7 +180,7 @@ export default function App() {
               ></path>
             </svg>
           </div>
-          {/* svg divider */}
+          svg divider */}
           <h3>Aqui encontraras</h3>
           <div className="features--container">{features}</div>
           {/* svg divider */}
@@ -98,52 +198,6 @@ export default function App() {
             </svg>
           </div>
           {/* svg divider */}
-        </section>
-        {/* form */}
-        <section className="form--section" id="cita">
-          <form>
-            <h2 className="h-cita">Agenda tu cita</h2>
-            <section className="input--section">
-              <div>
-                <Input
-                  lable="Nombre"
-                  type="text"
-                  placeholder="Juan Perez"
-                  name='nombre'
-                  expresionRegular={expresions.name}
-                  state={name}
-                  changeState={changeName}
-                />
-                <Input
-                  name='email'
-                  state={email}
-                  changeState={changeEmail}
-                  lable="Correo"
-                  type="email"
-                  placeholder="juanp@gmail.com"
-                  expresionRegular={expresions.mail}
-                />
-              </div>
-              <div>
-                <section className="select--container">
-                  <label className="label">Elije tu servicio</label>
-                  <select className="select">
-                    <option value="endodoncia">Blanqueamiento</option>
-                    <option value="endodoncia">Endodoncía</option>
-                    <option value="ortodoncia">Ortodoncía</option>
-                    <option value="limpieza">Limpieza</option>
-                    <option value="otros">Otros</option>
-                  </select>
-                </section>
-                <Input
-                  lable="Fecha"
-                  type="date"
-                  placeholde="Selecciona tu fecha"
-                />
-              </div>
-            </section>
-            <button className="boton--cita">Hacer cita</button>
-          </form>
         </section>
         {/* equipo */}
         <section className="team--section" id="equipo">
@@ -166,16 +220,6 @@ export default function App() {
             <Equipo img={drN} name="Dr. Francisco Nin" />
             <Equipo img={drR} name="Dr. Ricardo Brea" />
           </div>
-        </section>
-        {/* equipo */}
-
-        {/* services */}
-        <section className="services--section" id="servicios">
-          <div>
-            <h3>Servicios</h3>
-          </div>
-          <div className="services--cards">{services}</div>
-
           {/* divider svg bottom */}
           <div className="custom-shape-divider-bottom-1668034141">
             <svg
@@ -190,6 +234,177 @@ export default function App() {
               ></path>
             </svg>
           </div>
+        </section>
+        {/* equipo */}
+
+        {/* services */}
+        <section className="services--section" id="servicios">
+          <div>
+            <h3 className="h3">Servicios</h3>
+          </div>
+          <div className="services--cards">{Service}</div>
+        </section>
+        {/* form */}
+        <section className="form--section" id="cita">
+          <div className="encuentranos">
+            <div className="contacto_title">
+              <h2>Mantente conectado con nosotros</h2>
+            </div>
+
+            <section className="aNl">
+              <div>
+                <div className="address ubicacion">
+                  <div className="ubicacion_title">
+                    <div>
+                      <FaMapMarkerAlt className="address--icon" />
+                    </div>
+                    <h3>Ubicación</h3>
+                  </div>
+                  <div>
+                    <p>
+                      <a className="encuentranos_links" href="">
+                        Av. Pasteur No. 55, Suite 102, Gascue, Santo Domingo.
+                      </a>
+                    </p>
+                    <p>
+                      <a className="encuentranos_links" href="">
+                        Av. Simon Bolivar No. 105, Suite 102, Gascue, Santo
+                        Domingo.
+                      </a>
+                    </p>
+                  </div>
+                </div>
+
+                <div className="address mail">
+                  <div className="mail_title">
+                    <div>
+                      <FaEnvelope className="address--icon" />
+                    </div>
+                    <h3>Email</h3>
+                  </div>
+                  <p>
+                    <a
+                      className="encuentranos_links"
+                      href="mailto:clinicadentaldr.nin@gmail.com"
+                    >
+                      clinicadentaldr.nin@gmail.com
+                    </a>
+                  </p>
+                </div>
+              </div>
+              <div className="socials--container">
+                <Socials
+                  link="https://www.instagram.com/nindentalclinic/?hl=en"
+                  socialIcon={<FaInstagram />}
+                />
+                <Socials
+                  link="https://api.whatsapp.com/send?phone=18092832825"
+                  socialIcon={<FaWhatsapp />}
+                />
+              </div>
+            </section>
+          </div>
+          <>
+            <form onSubmit={handleSubmit}>
+              <h2 className="h-cita">Agenda tu cita</h2>
+              <section className="input--section">
+                <div className="form_div">
+                  <Input
+                    lable="Nombre"
+                    type="text"
+                    placeholder="Juan Perez"
+                    name="nombre"
+                    expresionRegular={expresions.name}
+                    state={name}
+                    changeState={changeName}
+                  />
+                  <Input
+                    name="email"
+                    state={email}
+                    changeState={changeEmail}
+                    lable="Correo"
+                    type="email"
+                    placeholder="juanp@gmail.com"
+                    expresionRegular={expresions.mail}
+                  />
+                  <Input
+                    name="phone"
+                    type="tel"
+                    state={phone}
+                    placeholder="8092223333"
+                    changeState={setPhone}
+                    lable="Telefono"
+                  />
+                </div>
+                <div className="form_div">
+                  <section className="select--container input--container">
+                    <label className="label">Tratamiento de interes:</label>
+                    <select
+                      className="select"
+                      value={tratamiento}
+                      onChange={(e) => setTratamiento(e.target.value)}
+                    >
+                      <option value="Carillas">Carillas</option>
+                      <option value="Blanqueamiento">Blanqueamiento</option>
+                      <option value="Implantes">Implantes</option>
+                      <option value="Diseño de sonrisa">
+                        Diseño de sonrisa
+                      </option>
+                      <option value="Coronas o puentes">Coronas/Puentes</option>
+                      <option value="Endodoncia">Endodoncía</option>
+                      <option value="Ortodoncia">Ortodoncía</option>
+                      <option value="Limpieza">Limpieza</option>
+                      <option value="Urgencia">Dolor/Urgencia</option>
+                      <option value="Otros">Otros</option>
+                    </select>
+                  </section>
+                  <Input
+                    lable="Fecha prevista"
+                    type="date"
+                    placeholde="Selecciona tu fecha"
+                    changeState={setFecha}
+                  />
+                </div>
+              </section>
+              <label className="checkbox_label">
+                <input
+                  name="consentimientoWhatsapp"
+                  type="checkbox"
+                  checked={consentimientoWhatsapp} // Controls the checkbox's state
+                  onChange={handleConsentimientoWhatsapp} // Updates the state on change
+                />
+                Autorizo que me contacten via Whatsapp o telefono.
+              </label>
+              <button className="boton--cita">Hacer cita</button>
+              {error && (
+                <div className="error-modal">
+                  <p className="error">{error}</p>
+                </div>
+              )}
+            </form>
+            {/* confirmacion de envio */}
+            {modal && (
+              <div className="modal-overlay">
+                {" "}
+                <div className="modal">
+                  {" "}
+                  <div className="check">✓</div> <h3>Solicitud enviada</h3>{" "}
+                  <p>
+                    {" "}
+                    Hola '{name}' Hemos recibido tu solicitud de cita. Nuestro
+                    equipo te responderá en breve para confirmar la fecha de tu
+                    consulta o tratamiento.
+                    <br />
+                    <strong>Gracias por confiar en nosotros!</strong>{" "}
+                  </p>{" "}
+                  <button className="modal-btn" onClick={() => setModal(false)}>
+                    {" "}
+                    Entendido{" "}
+                  </button>{" "}
+                </div>{" "}
+              </div>
+            )}
+          </>
         </section>
       </main>
       <Footer />

@@ -1,45 +1,47 @@
 export default [
   {
     id: 1,
-    classname: "services--img",
-    icono: "/assets/orto.png",
-    titulo: "Ortodoncia",
-    texto:
-      "Especialidad de la odontología que se encarga de la corrección de los dientes y huesos posicionados de manera incorrecta.",
+    classname:"services--img",
+    icono: "/assets/smile.svg",
+    titulo: "Diseño de sonrisa",
+    texto: "Transformamos tu sonrisa de manera personalizada, combinando estética y función para lograr armonía natural.",
   },
   {
     id: 2,
-    classname:"services--img blanq",
-    icono:"/assets/blanqueamiento.png",
-    titulo:"Blanqueamiento",
-    texto:"Aplicamos la odontología estética para eliminar las manchas dentales y hacer que tus dientes adquieran una tono más blanco y brillante.",
+    classname:"services--img implante",
+    icono: "/assets/implantes.svg",
+    titulo:"Implantes",
+    texto:"Recupera tu sonrisa con dientes fijos, seguros y tan naturales que nadie notará la diferencia.",
   },
-  {
+   {
     id: 3,
     classname:"services--img",
-    icono:"/assets/coronas.png",
-    titulo:"Coronas",
-    texto:"Es una prótesis dentaria hecha a medida para cada paciente en concreto. Son como pequeñas fundas que nos permiten recubrir completamente un diente que haya sufrido daños.",
+    icono: "/assets/carillas.svg",
+    titulo:"Carillas",
+    texto:"Mejora el color, forma y tamaño de tus dientes en pocas citas y logra una sonrisa de impacto.",
   },
-  {
+   {
     id: 4,
-    classname:"services--img implante",
-    icono: "/assets/implantes.png",
-    titulo:"Implantes",
-    texto:"Raíz dental artificial que se inserta en el hueso de la mandíbula para sustituir el diente que falta como si fuera un diente natural.",
+    classname:"services--img blanq",
+    icono:"/assets/blanqueamiento.svg",
+    titulo:"Blanqueamiento",
+    texto:"Aclara varios tonos tu sonrisa y luce dientes más blancos desde la primera sesión.",
   },
   {
     id: 5,
-    classname:"services--img",
-    icono: "/assets/smile.png",
-    titulo: "Diseño de sonrisa",
-    texto: "Procedimiento dental que crea artísticamente sonrisas con armonía, estética y función.",
+    classname: "services--img",
+    icono: "/assets/orto.svg",
+    titulo: "Ortodoncia",
+    texto:
+      "Alinea tu sonrisa y mejora tu mordida con tratamientos modernos y discretos.",
   },
+ 
   {
     id: 6,
     classname:"services--img",
-    icono: "/assets/carillas.png",
-    titulo:"Carillas",
-    texto:"Las carillas dentales son unas finas láminas de porcelana o composite que se adhieren a la cara visible del diente para mejorar su aspecto.",
-  }
+    icono:"/assets/coronas.svg",
+    titulo:"Coronas",
+    texto:"Restaura dientes dañados con piezas resistentes, estéticas y hechas a tu medida.",
+  },
+ 
 ];
