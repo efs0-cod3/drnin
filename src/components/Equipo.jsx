@@ -1,14 +1,13 @@
-import React from 'react'
+import React from "react";
 
-export default function Equipo(props) {
+export default function Equipo({ img, name, role, className }) {
   return (
-    <div className='team_card'>
-        <section className='img_section'>
-            <img className='team_card--img' src={props.img}/>
-        </section>
-        <section className='card_info'>
-            <h2>{props.name}</h2>
-        </section>
+    <div className={`team-card${className ? " " + className : ""}`}>
+      <div className="team-card__img-wrap">
+        <img className="team-card__img" src={img} alt={name} />
+      </div>
+      <h3 className="team-card__name">{name}</h3>
+      {role && <p className="team-card__role">{role}</p>}
     </div>
-  )
+  );
 }

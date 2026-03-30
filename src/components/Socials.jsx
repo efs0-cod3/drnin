@@ -1,9 +1,14 @@
-import React from 'react'
+import React from "react";
 
-export default function Socials(props) {
+export default function Socials({ link, socialIcon }) {
   return (
-    <a href={props.link} target="_blank" className='socials-icon'>
-        {props.socialIcon}
+    <a
+      href={link}
+      className="social-btn"
+      target="_blank"
+      rel="noopener noreferrer"
+    >
+      {socialIcon}
     </a>
-  )
+  );
 }

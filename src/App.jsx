@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import "./App.css";
 import Navbar from "./components/Navbar";
 import Features from "./components/Features";
@@ -6,11 +6,11 @@ import Input from "./components/Input";
 import Services from "./components/Services";
 import Equipo from "./components/Equipo";
 import Footer from "./components/Footer";
-import clinicLogo from "./assets/ninlogo.png";
+import Socials from "./components/Socials";
+import WhatsAppButton from "./components/Whatsapp";
 import featuresData from "./featuresData";
 import servicesData from "./servicesData";
 import doctorsData from "./doctorsData";
-import Socials from "./components/Socials";
 import emailjs from "@emailjs/browser";
 import {
   FaInstagram,
@@ -18,79 +18,64 @@ import {
   FaMapMarkerAlt,
   FaEnvelope,
 } from "react-icons/fa";
-import WhatsAppButton from "./components/Whatsapp";
 
 const VITE_EMAIL_SERVICE_ID = import.meta.env.VITE_EMAIL_SERVICE_ID;
 const VITE_EMAIL_TEMPLATE_ID = import.meta.env.VITE_EMAIL_TEMPLATE_ID;
-const VITE_EMAIL_PUBLIC_KEY = import.meta.env.VITE_EMAIL_PUBLIC_KEY;
+const VITE_EMAIL_PUBLIC_KEY  = import.meta.env.VITE_EMAIL_PUBLIC_KEY;
 
 export default function App() {
-  const [name, changeName] = useState("");
-  const [email, changeEmail] = useState("");
+  const [name,   changeName]  = useState("");
+  const [email,  changeEmail] = useState("");
   const [tratamiento, setTratamiento] = useState("Carillas");
-  const [fecha, setFecha] = useState("");
-  const [modal, setModal] = useState(false);
-  const [phone, setPhone] = useState("");
-  const [error, setError] = useState(null);
+  const [fecha,  setFecha]    = useState("");
+  const [modal,  setModal]    = useState(false);
+  const [phone,  setPhone]    = useState("");
+  const [error,  setError]    = useState(null);
   const [consentimientoWhatsapp, setConsentimientoWhatsapp] = useState(false);
- 
 
+  /* ── Scroll-reveal observer ───────────── */
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) entry.target.classList.add("visible");
+        });
+      },
+      { threshold: 0.1 }
+    );
+    document.querySelectorAll(".reveal").forEach((el) => observer.observe(el));
+    return () => observer.disconnect();
+  }, []);
+
+  /* ── Helpers ──────────────────────────── */
+  const flashError = (msg) => {
+    setError(msg);
+    setTimeout(() => setError(""), 3200);
+  };
+
+  const expresions = {
+    name:  /[^a-zA-ZÀ-ÿ\s]{1,40}$/g,
+    mail:  /^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$/,
+    phone: /^\d{3}-?\d{3}-?\d{4}$/,
+  };
+
+  const handleConsentimientoWhatsapp = (e) =>
+    setConsentimientoWhatsapp(e.target.checked);
+
+  /* ── Submit ───────────────────────────── */
   const handleSubmit = (e) => {
     e.preventDefault();
 
-    if (!name || !email || !fecha) {
-      setError("Por favor completa todos los campos");
-
-      setTimeout(() => {
-        setError("");
-      }, 3000);
-
-      return;
-    }
-
-    if (!name) {
-      setError("Por favor completa casilla nombre");
-
-      setTimeout(() => {
-        setError("");
-      }, 3000);
-
-      return;
-    }
-
-    if (!phone || !expresions.phone.test(phone)) {
-      setError("Por favor completa casilla telefono");
-
-      setTimeout(() => {
-        setError("");
-      }, 3000);
-
-      return;
-    }
-
-    if (!email) {
-      setError("Por favor completa casilla email");
-
-      setTimeout(() => {
-        setError("");
-      }, 3000);
-
-      return;
-    }
-
-    if (!consentimientoWhatsapp) {
-      setError("Por favor autoriza contacto via whatsapp o telefono.");
-
-      setTimeout(() => {
-        setError("");
-      }, 3000);
-
-      return;
-    }
+    if (!name || !email || !fecha)
+      return flashError("Por favor completa todos los campos.");
+    if (!phone || !expresions.phone.test(phone))
+      return flashError("Teléfono inválido. Usa el formato 809-222-3333.");
+    if (!consentimientoWhatsapp)
+      return flashError("Por favor autoriza el contacto vía WhatsApp o teléfono.");
 
     const data = {
       nombre: name,
-      email: email,
+      email,
       tratamiento,
       phone,
       fecha,
@@ -99,344 +84,268 @@ export default function App() {
         : "No autorizó contacto",
     };
 
-    const handleSendToSheet = () => {
+    const sendToSheet = () => {
       fetch("https://sheetdb.io/api/v1/tlwc1lp5do13o", {
         method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
+        headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
-          data: [
-            {
-              fecha: new Date().toLocaleDateString("es-DO"),
-              nombre: name,
-              email: email,
-              telefono: phone,
-              tratamiento: tratamiento,
-              fecha_cita_solicitada: fecha,
-              consentimiento: consentimientoWhatsapp
-                ? "Autorizado"
-                : "No autorizado",
-            },
-          ],
+          data: [{
+            fecha: new Date().toLocaleDateString("es-DO"),
+            nombre: name,
+            email,
+            telefono: phone,
+            tratamiento,
+            fecha_cita_solicitada: fecha,
+            consentimiento: consentimientoWhatsapp ? "Autorizado" : "No autorizado",
+          }],
         }),
       });
     };
 
     emailjs
-      .send(
-        VITE_EMAIL_SERVICE_ID,
-        VITE_EMAIL_TEMPLATE_ID,
-        {
-          ...data,
-        },
-        VITE_EMAIL_PUBLIC_KEY,
-      )
-      .then(() => {
-        handleSendToSheet();
-        setModal(true);
-      })
-      .catch(() => {
-        setError("Error al enviar msj");
-        setTimeout(() => {
-          setError("");
-        }, 3000);
-      });
+      .send(VITE_EMAIL_SERVICE_ID, VITE_EMAIL_TEMPLATE_ID, data, VITE_EMAIL_PUBLIC_KEY)
+      .then(() => { sendToSheet(); setModal(true); })
+      .catch(() => flashError("Error al enviar. Intenta de nuevo."));
   };
 
-  const handleConsentimientoWhatsapp = (e) => {
-    // Access the boolean checked state using event.target.checked
-    setConsentimientoWhatsapp(e.target.checked);
-  };
+  /* ── Data maps ────────────────────────── */
+  const features = featuresData.map((item, i) => (
+    <Features
+      key={item.id}
+      icon={item.icon}
+      titulo={item.titulo}
+      texto={item.texto}
+      className={`reveal reveal-d${i + 1}`}
+    />
+  ));
 
-  const expresions = {
-    name: /[^a-zA-ZÀ-ÿ\s]{1,40}$/g, // Letras y espacios, pueden llevar acentos.
-    mail: /^[a-zA-Z0-9_.+-]+@^[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$/g,
-    phone: /^\d{3}-?\d{3}-?\d{4}$/,
-  };
+  const doctores = doctorsData.map((doc, i) => (
+    <Equipo
+      key={doc.id}
+      img={doc.img}
+      name={doc.name}
+      role={doc.role}
+      className={`reveal reveal-d${i + 1}`}
+    />
+  ));
 
-  const features = featuresData.map((item) => {
-    return (
-      <Features
-        key={item.id}
-        icon={item.icon}
-        titulo={item.titulo}
-        texto={item.texto}
-      />
-    );
-  });
+  const serviceCards = servicesData.map((item, i) => (
+    <Services
+      key={item.id}
+      classN={item.classname}
+      icono={item.icono}
+      titulo={item.titulo}
+      texto={item.texto}
+      className={`reveal reveal-d${i + 1}`}
+    />
+  ));
 
-  const doctores = doctorsData.map((doctor) => {
-    return <Equipo key={doctor.id} img={doctor.img} name={doctor.name} />;
-  });
-
-  const Service = servicesData.map((item) => {
-    return (
-      <Services
-        key={item.id}
-        classN={item.classname}
-        icono={item.icono}
-        titulo={item.titulo}
-        texto={item.texto}
-      />
-    );
-  });
-
+  /* ── Render ───────────────────────────── */
   return (
     <div className="App">
       <Navbar />
-      <main>
-        <WhatsAppButton />
-        <section className="nosotros" id="Nosotros">
-          <img src={clinicLogo} className="flogo" />
-          <h2 className="nosotros-h2" lang="esp">
-            Contamos un equipo de profesionales que con{" "}
-            <span className="hl">pasión</span> y{" "}
-            <span className="hl">entrega</span> brindamos el mejor servicio a
-            nuestros pacientes.
-          </h2>
-        </section>
+      <WhatsAppButton />
 
-        <section className="features--section" id="Features">
-          {/* svg divider */}
-          {/* <div className="custom-shape-divider-top-1667862197">
-            <svg
-              data-name="Layer 1"
-              xmlns="http://www.w3.org/2000/svg"
-              viewBox="0 0 1200 120"
-              preserveAspectRatio="none"
-            >
-              <path
-                d="M321.39,56.44c58-10.79,114.16-30.13,172-41.86,82.39-16.72,168.19-17.73,250.45-.39C823.78,31,906.67,72,985.66,92.83c70.05,18.48,146.53,26.09,214.34,3V0H0V27.35A600.21,600.21,0,0,0,321.39,56.44Z"
-                className="shape-fill"
-              ></path>
-            </svg>
+      {/* ── HERO ── */}
+      <section className="hero" id="Nosotros">
+        <div className="hero__overlay" />
+        <div className="hero__content">
+          <span className="hero__badge">Nin Dental Clinic · Santo Domingo</span>
+          <h1 className="hero__heading">
+            Tu Sonrisa,<br /><em>Nuestra Pasión</em>
+          </h1>
+          <p className="hero__sub">
+            Odontología de excelencia en el corazón de Gascue.
+            Un equipo comprometido con tu bienestar y con resultados que transforman vidas.
+          </p>
+          <div className="hero__ctas">
+            <a href="#Cita" className="btn btn--primary">Agenda tu cita</a>
+            <a href="#Servicios" className="btn btn--outline">Nuestros servicios</a>
           </div>
-          svg divider */}
-          <h3>Aqui encontraras</h3>
-          <div className="features--container">{features}</div>
-          {/* svg divider */}
-          <div className="custom-shape-divider-bottom-1667862623">
-            <svg
-              data-name="Layer 1"
-              xmlns="http://www.w3.org/2000/svg"
-              viewBox="0 0 1200 120"
-              preserveAspectRatio="none"
-            >
-              <path
-                d="M985.66,92.83C906.67,72,823.78,31,743.84,14.19c-82.26-17.34-168.06-16.33-250.45.39-57.84,11.73-114,31.07-172,41.86A600.21,600.21,0,0,1,0,27.35V120H1200V95.8C1132.19,118.92,1055.71,111.31,985.66,92.83Z"
-                className="shape-fill"
-              ></path>
-            </svg>
-          </div>
-          {/* svg divider */}
-        </section>
-        {/* equipo */}
-        <section className="team--section" id="Equipo">
-          <div className="custom-shape-divider-top-1667952866">
-            <svg
-              data-name="Layer 1"
-              xmlns="http://www.w3.org/2000/svg"
-              viewBox="0 0 1200 120"
-              preserveAspectRatio="none"
-            >
-              <path
-                d="M321.39,56.44c58-10.79,114.16-30.13,172-41.86,82.39-16.72,168.19-17.73,250.45-.39C823.78,31,906.67,72,985.66,92.83c70.05,18.48,146.53,26.09,214.34,3V0H0V27.35A600.21,600.21,0,0,0,321.39,56.44Z"
-                className="shape-fill"
-              ></path>
-            </svg>
-          </div>
-          <h3>Equipo</h3>
+        </div>
+        <div className="hero__scroll-hint">
+          <span>Descubre más</span>
+          <div className="scroll-line" />
+        </div>
+      </section>
 
-          <div className="team">{doctores}</div>
-          {/* divider svg bottom */}
-          <div className="custom-shape-divider-bottom-1668034141">
-            <svg
-              data-name="Layer 1"
-              xmlns="http://www.w3.org/2000/svg"
-              viewBox="0 0 1200 120"
-              preserveAspectRatio="none"
-            >
-              <path
-                d="M321.39,56.44c58-10.79,114.16-30.13,172-41.86,82.39-16.72,168.19-17.73,250.45-.39C823.78,31,906.67,72,985.66,92.83c70.05,18.48,146.53,26.09,214.34,3V0H0V27.35A600.21,600.21,0,0,0,321.39,56.44Z"
-                className="shape-fill"
-              ></path>
-            </svg>
-          </div>
-        </section>
-        {/* equipo */}
+      {/* ── FEATURES ── */}
+      <section className="features-wrap" id="Features">
+        <div className="section-header reveal">
+          <span className="section-label">¿Por qué elegirnos?</span>
+          <h2 className="section-title">Excelencia en cada detalle</h2>
+        </div>
+        <div className="features-grid">{features}</div>
+      </section>
 
-        {/* services */}
-        <section className="services--section" id="Servicios">
-          <div>
-            <h3 className="h3">Servicios</h3>
-          </div>
-          <div className="services--cards">{Service}</div>
-        </section>
-        {/* form */}
-        <section className="form--section" id="Cita">
-          <div className="encuentranos">
-            <div className="contacto_title">
-              <h2>Mantente conectado con nosotros</h2>
-            </div>
+      {/* ── TEAM ── */}
+      <section className="team-wrap" id="Equipo">
+        <div className="section-header reveal">
+          <span className="section-label">Nuestro equipo</span>
+          <h2 className="section-title">Profesionales a tu servicio</h2>
+        </div>
+        <div className="team-grid">{doctores}</div>
+      </section>
 
-            <section className="aNl">
-              <div>
-                <div className="address ubicacion">
-                  <div className="ubicacion_title">
-                    <div>
-                      <FaMapMarkerAlt className="address--icon" />
-                    </div>
-                    <h3>Ubicación</h3>
-                  </div>
-                  <div>
-                    <p>
-                      <a className="encuentranos_links" href="">
-                        Av. Pasteur No. 55, Suite 102, Gascue, Santo Domingo.
-                      </a>
-                    </p>
-                    <p>
-                      <a className="encuentranos_links" href="">
-                        Av. Simon Bolivar No. 105, Suite 102, Gascue, Santo
-                        Domingo.
-                      </a>
-                    </p>
-                  </div>
+      {/* ── SERVICES ── */}
+      <section className="services-wrap" id="Servicios">
+        <div className="section-header reveal">
+          <span className="section-label">Lo que ofrecemos</span>
+          <h2 className="section-title">Nuestros servicios</h2>
+        </div>
+        <div className="services-grid">{serviceCards}</div>
+      </section>
+
+      {/* ── CONTACT + FORM ── */}
+      <section className="contact-wrap" id="Cita">
+        <div className="contact-inner">
+          {/* info */}
+          <div className="contact-info reveal">
+            <span className="section-label">Mantente en contacto</span>
+            <h2 className="section-title">Visítanos</h2>
+
+            <div className="contact-info-body">
+              <div className="contact-detail">
+                <div className="contact-detail__icon">
+                  <FaMapMarkerAlt />
                 </div>
+                <div>
+                  <p className="contact-detail__label">Ubicación</p>
+                  <p className="contact-detail__text">
+                    <a href="#">Av. Pasteur No. 55, Suite 102, Gascue, Santo Domingo.</a><br />
+                    <a href="#">Av. Simón Bolívar No. 105, Suite 102, Gascue, Santo Domingo.</a>
+                  </p>
+                </div>
+              </div>
 
-                <div className="address mail">
-                  <div className="mail_title">
-                    <div>
-                      <FaEnvelope className="address--icon" />
-                    </div>
-                    <h3>Email</h3>
-                  </div>
-                  <p>
-                    <a
-                      className="encuentranos_links"
-                      href="mailto:clinicadentaldr.nin@gmail.com"
-                    >
+              <div className="contact-detail">
+                <div className="contact-detail__icon">
+                  <FaEnvelope />
+                </div>
+                <div>
+                  <p className="contact-detail__label">Email</p>
+                  <p className="contact-detail__text">
+                    <a href="mailto:clinicadentaldr.nin@gmail.com">
                       clinicadentaldr.nin@gmail.com
                     </a>
                   </p>
                 </div>
               </div>
-              <div className="socials--container">
-                <Socials
-                  link="https://www.instagram.com/nindentalclinic/?hl=en"
-                  socialIcon={<FaInstagram />}
-                />
-                <Socials
-                  link="https://api.whatsapp.com/send?phone=18092832825"
-                  socialIcon={<FaWhatsapp />}
-                />
-              </div>
-            </section>
+            </div>
+
+            <div className="contact-socials">
+              <Socials
+                link="https://www.instagram.com/nindentalclinic/?hl=en"
+                socialIcon={<FaInstagram />}
+              />
+              <Socials
+                link="https://api.whatsapp.com/send?phone=18092832825"
+                socialIcon={<FaWhatsapp />}
+              />
+            </div>
           </div>
-          <>
+
+          {/* form */}
+          <div className="form-container reveal reveal-d2">
             <form onSubmit={handleSubmit}>
-              <h2 className="h-cita">Agenda tu cita</h2>
-              <section className="input--section">
-                <div className="form_div">
-                  <Input
-                    lable="Nombre"
-                    type="text"
-                    placeholder="Juan Perez"
-                    name="nombre"
-                    expresionRegular={expresions.name}
-                    state={name}
-                    changeState={changeName}
-                  />
-                  <Input
-                    name="email"
-                    state={email}
-                    changeState={changeEmail}
-                    lable="Correo"
-                    type="email"
-                    placeholder="juanp@gmail.com"
-                    expresionRegular={expresions.mail}
-                  />
-                  <Input
-                    name="phone"
-                    type="tel"
-                    state={phone}
-                    placeholder="8092223333"
-                    changeState={setPhone}
-                    lable="Telefono"
-                  />
-                </div>
-                <div className="form_div">
-                  <section className="select--container input--container">
-                    <label className="label">Tratamiento de interes:</label>
-                    <select
-                      className="select"
-                      value={tratamiento}
-                      onChange={(e) => setTratamiento(e.target.value)}
-                    >
-                      <option value="Carillas">Carillas</option>
-                      <option value="Blanqueamiento">Blanqueamiento</option>
-                      <option value="Implantes">Implantes</option>
-                      <option value="Diseño de sonrisa">
-                        Diseño de sonrisa
-                      </option>
-                      <option value="Coronas o puentes">Coronas/Puentes</option>
-                      <option value="Endodoncia">Endodoncía</option>
-                      <option value="Ortodoncia">Ortodoncía</option>
-                      <option value="Limpieza">Limpieza</option>
-                      <option value="Urgencia">Dolor/Urgencia</option>
-                      <option value="Otros">Otros</option>
-                    </select>
-                  </section>
-                  <Input
-                    lable="Fecha prevista"
-                    type="date"
-                    placeholde="Selecciona tu fecha"
-                    changeState={setFecha}
-                  />
-                </div>
-              </section>
-              <label className="checkbox_label">
-                <input
-                  name="consentimientoWhatsapp"
-                  type="checkbox"
-                  checked={consentimientoWhatsapp} // Controls the checkbox's state
-                  onChange={handleConsentimientoWhatsapp} // Updates the state on change
+              <h2 className="form-title">Agenda tu cita</h2>
+
+              <div className="form-row">
+                <Input
+                  lable="Nombre"
+                  type="text"
+                  placeholder="Juan Pérez"
+                  name="nombre"
+                  expresionRegular={expresions.name}
+                  state={name}
+                  changeState={changeName}
                 />
-                Autorizo que me contacten via Whatsapp o telefono.
-              </label>
-              <button className="boton--cita">Hacer cita</button>
-              {error && (
-                <div className="error-modal">
-                  <p className="error">{error}</p>
-                </div>
-              )}
-            </form>
-            {/* confirmacion de envio */}
-            {modal && (
-              <div className="modal-overlay">
-                {" "}
-                <div className="modal">
-                  {" "}
-                  <div className="check">✓</div> <h3>Solicitud enviada</h3>{" "}
-                  <p>
-                    {" "}
-                    Hola '{name}' Hemos recibido tu solicitud de cita. Nuestro
-                    equipo te responderá en breve para confirmar la fecha de tu
-                    consulta o tratamiento.
-                    <br />
-                    <strong>Gracias por confiar en nosotros!</strong>{" "}
-                  </p>{" "}
-                  <button className="modal-btn" onClick={() => setModal(false)}>
-                    {" "}
-                    Entendido{" "}
-                  </button>{" "}
-                </div>{" "}
+                <Input
+                  lable="Correo electrónico"
+                  name="email"
+                  type="email"
+                  placeholder="juan@email.com"
+                  state={email}
+                  changeState={changeEmail}
+                />
               </div>
-            )}
-          </>
-        </section>
-      </main>
+
+              <div className="form-row">
+                <Input
+                  lable="Teléfono"
+                  name="phone"
+                  type="tel"
+                  placeholder="809-222-3333"
+                  state={phone}
+                  changeState={setPhone}
+                />
+                <div className="field-group">
+                  <label className="field-label">Tratamiento de interés</label>
+                  <select
+                    className="field-select"
+                    value={tratamiento}
+                    onChange={(e) => setTratamiento(e.target.value)}
+                  >
+                    <option value="Carillas">Carillas</option>
+                    <option value="Blanqueamiento">Blanqueamiento</option>
+                    <option value="Implantes">Implantes</option>
+                    <option value="Diseño de sonrisa">Diseño de sonrisa</option>
+                    <option value="Coronas o puentes">Coronas / Puentes</option>
+                    <option value="Endodoncia">Endodoncía</option>
+                    <option value="Ortodoncia">Ortodoncía</option>
+                    <option value="Limpieza">Limpieza</option>
+                    <option value="Urgencia">Dolor / Urgencia</option>
+                    <option value="Otros">Otros</option>
+                  </select>
+                </div>
+              </div>
+
+              <Input
+                lable="Fecha preferida"
+                type="date"
+                state={fecha}
+                changeState={setFecha}
+              />
+
+              <label className="checkbox-row">
+                <input
+                  type="checkbox"
+                  checked={consentimientoWhatsapp}
+                  onChange={handleConsentimientoWhatsapp}
+                />
+                Autorizo que me contacten vía WhatsApp o teléfono.
+              </label>
+
+              <button type="submit" className="submit-btn">
+                Solicitar cita
+              </button>
+
+              {error && <div className="error-banner">{error}</div>}
+            </form>
+          </div>
+        </div>
+      </section>
+
       <Footer />
+
+      {/* ── SUCCESS MODAL ── */}
+      {modal && (
+        <div className="modal-overlay">
+          <div className="modal">
+            <div className="modal__check">✓</div>
+            <h3 className="modal__title">¡Solicitud enviada!</h3>
+            <p className="modal__text">
+              Hola <strong>{name}</strong>, hemos recibido tu solicitud de cita.
+              Nuestro equipo te responderá en breve para confirmar la fecha de tu consulta.
+              <br /><br />
+              <strong>¡Gracias por confiar en nosotros!</strong>
+            </p>
+            <button className="modal__btn" onClick={() => setModal(false)}>
+              Entendido
+            </button>
+          </div>
+        </div>
+      )}
     </div>
   );
 }

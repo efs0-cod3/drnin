@@ -10,16 +10,18 @@ export default function Input({
   name,
 }) {
   const onChange = (e) => {
-    changeState(e.target.value.replace(expresionRegular, ""));
-    // console.log(e.target.value)
-  }; //cambia el estado y evita el key de caracteres no aceptados
+    const val = expresionRegular
+      ? e.target.value.replace(expresionRegular, "")
+      : e.target.value;
+    changeState(val);
+  };
 
   return (
-    <div className="input--container">
-      <label className="label">{lable}</label>
+    <div className="field-group">
+      <label className="field-label">{lable}</label>
       <input
-        className="input"
-        value={state}
+        className="field-input"
+        value={state ?? ""}
         name={name}
         type={type}
         placeholder={placeholder}

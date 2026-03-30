@@ -1,13 +1,12 @@
 import React from "react";
 
-export default function Services(props) {
+export default function Services({ classN, icono, titulo, texto, className }) {
   return (
-    <div className="service--container">
-      <img className={props.classN} src={props.icono} /> 
-
-      <div className="service--text">
-        <h3 >{props.titulo}</h3>
-        <p>{props.texto}</p>
+    <div className={`service-card${className ? " " + className : ""}`}>
+      <img className="service-card__icon" src={icono} alt={titulo} />
+      <div className="service-card__body">
+        <h3 className="service-card__title">{titulo}</h3>
+        <p className="service-card__text">{texto}</p>
       </div>
     </div>
   );
