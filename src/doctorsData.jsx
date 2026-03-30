@@ -1,7 +1,7 @@
 export default [
       {
         id: 1,
-        img: "/assets/equipo/nin.jpg",
+        img: "/assets/equipo/ninopt.jpg",
         name: "Dr. Francisco Nin"
       },
       {
